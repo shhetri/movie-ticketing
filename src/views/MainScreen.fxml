@@ -29,7 +29,7 @@
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin></Button>
-                <Button fx:id="btnReport" mnemonicParsing="false" onAction="#showReport" prefHeight="48.0" prefWidth="250.0" text="Report" textFill="#b13535">
+                <Button fx:id="btnReport" mnemonicParsing="false" onAction="#showReport" prefHeight="48.0" prefWidth="250.0" text="Book Ticket" textFill="#b13535">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin></Button>

@@ -22,7 +22,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        DBConnector.connect(DatabaseType.MYSQL, "172.17.2.179", "8889", "mts", "root", "root");
+        DBConnector.connect(DatabaseType.MYSQL, "localhost", "8889", "mts", "root", "root");
         EventMapper.map(MovieWasFetchedSample.class, LogFetchedMovieSample.class);
         launch(args);
     }
