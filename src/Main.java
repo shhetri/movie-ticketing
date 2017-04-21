@@ -6,10 +6,10 @@ import com.got.event.EventMapper;
 import com.got.login.LoginMethod;
 import com.got.login.contracts.LoginSystemInterface;
 import com.got.validator.ValidatorFactory;
-import events.MovieWasFetchedSample;
+import events.MovieWasFetched;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import listeners.LogFetchedMovieSample;
+import listeners.LogFetchedMovie;
 import validators.DateValidator;
 
 public class Main extends Application {
@@ -17,7 +17,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DBConnector.connect(DatabaseType.MYSQL, "localhost", "8889", "mts", "root", "root");
-        EventMapper.map(MovieWasFetchedSample.class, LogFetchedMovieSample.class);
+        EventMapper.map(MovieWasFetched.class, LogFetchedMovie.class);
         ValidatorFactory validatorFactory = container.make(ValidatorFactory.class);
         validatorFactory.addValidator(DateValidator.class, "date", "Field must be a valid date");
         launch(args);

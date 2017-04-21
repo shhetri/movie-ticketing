@@ -2,6 +2,7 @@ package controllers;
 
 import com.got.alert.Alerter;
 import com.got.database.DB;
+import com.got.validator.Validator;
 import dto.Booking;
 import dto.Movie;
 import dto.Theatre;
@@ -50,6 +51,22 @@ public class BookTicketController extends Controller implements Initializable {
 
     @FXML
     void bookTicket(ActionEvent event) {
+
+
+        Validator validator = container.make(Validator.class);
+        validator.addRules(movieNames, "required", "Movie must be selected");
+        validator.addRules(movieDate, "required", "Date must be selected");
+        validator.addRules(movieShowTimes, "required", "Show time must be selected");
+        validator.addRules(bookedSeats, "required|number", "Number of seats is required|Number of seats must be numeric");
+        validator.addRules(customerName, "required|alphanumeric", "Customer name is required|Customer name must be alphanumeric");
+        validator.addRules(customerContact, "required|number", "Customer contact number is required|Customer contact number must be numeric");
+
+        if(!validator.validate()) return;
+
+        if(Integer.parseInt(bookedSeats.getText()) > Integer.parseInt(availableSeats.getText())) {
+            Alerter.showError("Number of seats must not be greater than available seats!");
+            return;
+        }
 
         float totalPrice = Float.parseFloat(bookedSeats.getText()) * Float.parseFloat(theatre.getTicketPrice());
 
