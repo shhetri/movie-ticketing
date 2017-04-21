@@ -1,6 +1,8 @@
 package controllers;
 
 import com.got.alert.Alerter;
+import com.got.validator.ValidationType;
+import com.got.validator.Validator;
 import dto.Theatre;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,6 +59,22 @@ public class TheatreController extends Controller implements Initializable {
 
     @FXML
     void update(ActionEvent event) {
+        Validator validator = container.make(Validator.class);
+        validator.setValidationType(ValidationType.POPUP);
+        validator.addRules(name, "required|alphanumeric", "Name is required|Name must be alpha numeric");
+        validator.addRules(name, "required", "Address is required");
+        validator.addRules(seatCapacity, "required|number", "Seat Capacity is required|Seat capacity must be a number");
+        validator.addRules(ticketPrice, "required|number", "Ticket Price is required|Ticket Price must be a number");
+        validator.addRules(showTimeOne, "required|time", "Show Time is required|Show Time must be a valid time in HH:MM format");
+        validator.addRules(showTimeTwo, "required|time", "Show Time is required|Show Time must be a valid time in HH:MM format");
+        validator.addRules(showTimeThree, "required|time", "Show Time is required|Show Time must be a valid time in HH:MM format");
+        validator.addRules(showTimeFour, "required|time", "Show Time is required|Show Time must be a valid time in HH:MM format");
+        validator.addRules(showTimeFive, "required|time", "Show Time is required|Show Time must be a valid time in HH:MM format");
+
+        if (!validator.validate()) {
+            return;
+        }
+
         Theatre theatre = container.make(Theatre.class);
         theatre.setAddress(address.getText());
         theatre.setName(name.getText());
