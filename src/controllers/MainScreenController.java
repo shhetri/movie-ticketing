@@ -2,9 +2,6 @@ package controllers;
 
 import com.got.window.Window;
 import com.got.window.WindowViewResolver;
-import javafx.fxml.FXML;
-import com.got.window.Window;
-import com.got.window.WindowViewResolver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,8 +32,9 @@ public class MainScreenController extends Controller {
     }
 
     @FXML
-    void showReport(ActionEvent event) {
+    void bookTicket(ActionEvent event) {
 
+        com.got.window.Window.WindowBuilder.initialize().withView("BookTicketScreen").withTitle("Book Ticket").build().open();
 
     }
 

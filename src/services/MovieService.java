@@ -4,7 +4,7 @@ import com.got.container.contracts.Container;
 import com.got.container.contracts.ContainerAware;
 import com.got.event.contracts.EventDispatcher;
 import dto.Movie;
-import events.MovieWasFetchedSample;
+import events.MovieWasFetched;
 import repositories.MovieRepository;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class MovieService implements ContainerAware{
 
     public List<Movie> getAll() {
         List<Movie> movies = movieRepository.getAll();
-        dispatcher.dispatch(new MovieWasFetchedSample(movies));
+        dispatcher.dispatch(new MovieWasFetched(movies));
         return movies;
     }
 

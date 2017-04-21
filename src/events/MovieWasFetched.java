@@ -5,10 +5,10 @@ import dto.Movie;
 
 import java.util.List;
 
-public class MovieWasFetchedSample implements Event{
+public class MovieWasFetched implements Event{
     public List<Movie> movies;
 
-    public MovieWasFetchedSample(List<Movie> movies) {
+    public MovieWasFetched(List<Movie> movies) {
         this.movies = movies;
     }
 }

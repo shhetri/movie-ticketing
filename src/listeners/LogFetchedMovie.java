@@ -2,12 +2,12 @@ package listeners;
 
 import com.got.event.contracts.Event;
 import com.got.event.contracts.Listener;
-import events.MovieWasFetchedSample;
+import events.MovieWasFetched;
 
-public class LogFetchedMovieSample implements Listener{
+public class LogFetchedMovie implements Listener{
     @Override
     public void handle(Event event) {
-        MovieWasFetchedSample fetchedMovies = (MovieWasFetchedSample) event;
+        MovieWasFetched fetchedMovies = (MovieWasFetched) event;
         System.out.println(fetchedMovies.movies);
     }
 }

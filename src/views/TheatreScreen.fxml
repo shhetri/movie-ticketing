@@ -167,7 +167,7 @@
                         <Font name="Times New Roman" size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
+                  <Button mnemonicParsing="false" onAction="#cancel" text="Close">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

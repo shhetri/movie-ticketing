@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import services.MovieService;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -265,7 +266,8 @@ public class MovieScreenController extends Controller implements Initializable {
     public void loadMovies() {
         clearPanes();
 
-        List<Movie> movies = DB.table("movie").get(Movie.class);
+        MovieService movieService = container.make(MovieService.class);
+        List<Movie> movies = movieService.getAll();
 
         updateMovies(movies);
     }
