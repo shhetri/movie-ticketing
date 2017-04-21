@@ -1,11 +1,42 @@
 package dto;
 
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Movie {
     private String name;
     private String id;
     private String length;
     private String genre;
+    private String showTimes;
+    private String fromDate;
+    private String toDate;
+
+    public String getShowTimes() {
+        return showTimes;
+    }
+
+    public void setShowTimes(String showTimes) {
+        this.showTimes = showTimes;
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
 
     public String getName() {
         return name;
@@ -37,6 +68,15 @@ public class Movie {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getMovieRunningDate() {
+        return fromDate + " to " + toDate;
+    }
+
+    public List<String> getShowTimesList() {
+        List<String> showTimesList = Arrays.stream(showTimes.split(",")).map(String::trim).collect(Collectors.toList());
+        return showTimesList;
     }
 
     @Override
