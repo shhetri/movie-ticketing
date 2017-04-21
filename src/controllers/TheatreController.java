@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import services.TheatreService;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -49,6 +50,8 @@ public class TheatreController extends Controller implements Initializable {
 
     @FXML
     private TextField ticketPrice;
+
+    private List<TextField> showTimesField;
 
     @FXML
     void cancel(ActionEvent event) {
@@ -90,10 +93,19 @@ public class TheatreController extends Controller implements Initializable {
         seatCapacity.setText(theatre.getSeatCapacity());
         ticketPrice.setText(theatre.getTicketPrice());
         List<String> showTimes = theatre.getShowTimes();
-        showTimeOne.setText(showTimes.get(0));
-        showTimeTwo.setText(showTimes.get(1));
-        showTimeThree.setText(showTimes.get(2));
-        showTimeFour.setText(showTimes.get(3));
-        showTimeFive.setText(showTimes.get(4));
+
+        showTimesField = new ArrayList<TextField>(){
+            {
+                add(showTimeOne);
+                add(showTimeTwo);
+                add(showTimeThree);
+                add(showTimeFour);
+                add(showTimeFive);
+            }
+        };
+
+        for(int i = 0; i<showTimes.size(); i++) {
+            showTimesField.get(i).setText(showTimes.get(i));
+        }
     }
 }
