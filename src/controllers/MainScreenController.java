@@ -1,29 +1,28 @@
 package controllers;
 
+import com.got.window.Window;
+import com.got.window.WindowViewResolver;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 public class MainScreenController extends Controller {
-
     @FXML
     private Button btnRegMovie;
-
     @FXML
     private Button btnTheatre;
-
     @FXML
     private Button btnReport;
-
     @FXML
     private Button btnLogout;
 
+    {
+        WindowViewResolver.getInstance().setRootView("/views");
+    }
+
     @FXML
     void Logout(ActionEvent event) {
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
-
+        System.exit(0);
     }
 
     @FXML
@@ -40,7 +39,10 @@ public class MainScreenController extends Controller {
 
     @FXML
     void showTheatre(ActionEvent event) {
-
-
+        Window.WindowBuilder.initialize()
+                .withView("TheatreScreen")
+                .withTitle("Theatre Information")
+                .build()
+                .open();
     }
 }
