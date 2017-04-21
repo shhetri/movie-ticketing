@@ -18,53 +18,46 @@ import java.util.*;
 
 public class MovieScreenController extends Controller implements Initializable {
 
+    List<CheckBox> showTimesCheckBoxes;
     @FXML
     private CheckBox showTime1;
-
     @FXML
     private CheckBox showTime2;
-
     @FXML
     private CheckBox showTime3;
-
     @FXML
     private CheckBox showTime4;
-
     @FXML
     private CheckBox showTime5;
-
     @FXML
     private DatePicker fromDate;
-
     @FXML
     private DatePicker toDate;
-
     @FXML
     private TextField titleField;
-
     @FXML
     private TextField genreField;
-
     @FXML
     private TextField lengthField;
-
     @FXML
     private AnchorPane moviesTableContainer;
-
-    List<CheckBox> showTimesCheckBoxes;
-
     private Movie selectedMovie = container.make(Movie.class);
 
     @FXML
     void addMovie(ActionEvent event) {
 
         Validator validator = container.make(Validator.class);
-        validator.addRules(titleField, "required|alphanumeric", "Title is required|Title must be alaphanumeric");
+        validator.addRules(titleField, "required|alphanumeric", "Title is required|Title must be alapha numeric");
         validator.addRules(lengthField, "required|time", "Length is required|Length must be in HH:MM format");
-        validator.addRules(genreField, "required|alphanumeric", "Genre is required|Genre must be alaphanumeric");
+        validator.addRules(genreField, "required|alphanumeric", "Genre is required|Genre must be alapha numeric");
+        validator.addRules(fromDate, "required|date", "From is required|From field must be a valid date");
+        validator.addRules(toDate, "required|date", "To is required|To field must be a valid date");
 
-        if(!validator.validate()) return;
-
+        if (!validator.validate()) return;
+        if (!(showTime1.isSelected() || showTime2.isSelected() || showTime3.isSelected() || showTime4.isSelected() || showTime5.isSelected())) {
+            Alerter.showError("At least one show time must be selected.");
+            return;
+        }
         Movie movie = container.make(Movie.class);
         movie.setName(titleField.getText());
         movie.setLength(lengthField.getText());
@@ -73,7 +66,7 @@ public class MovieScreenController extends Controller implements Initializable {
         movie.setToDate(toDate.getValue().toString());
         movie.setShowTimes(generateShowTimesString());
 
-        Map<String, String> movieValues = new HashMap<String, String>(){
+        Map<String, String> movieValues = new HashMap<String, String>() {
             {
                 put("name", movie.getName());
                 put("length", movie.getLength());
@@ -85,7 +78,7 @@ public class MovieScreenController extends Controller implements Initializable {
         };
         int row = DB.table("movie").values(movieValues).insert();
 
-        if(row>0) {
+        if (row > 0) {
             Alerter.showSuccess("Movie has been added successfully!");
             loadMovies();
             clearFields();
@@ -96,7 +89,7 @@ public class MovieScreenController extends Controller implements Initializable {
 
     private String generateShowTimesString() {
         String showTimes = "";
-        if(showTime1.isSelected())
+        if (showTime1.isSelected())
             showTimes += showTime1.getText() + ",";
         if (showTime2.isSelected())
             showTimes += showTime2.getText() + ",";
@@ -106,8 +99,8 @@ public class MovieScreenController extends Controller implements Initializable {
             showTimes += showTime4.getText() + ",";
         if (showTime5.isSelected())
             showTimes += showTime5.getText() + ",";
-        if(showTimes.contains(","))
-            showTimes = showTimes.substring(0, showTimes.length()-1);
+        if (showTimes.contains(","))
+            showTimes = showTimes.substring(0, showTimes.length() - 1);
 
         return showTimes;
     }
@@ -117,7 +110,7 @@ public class MovieScreenController extends Controller implements Initializable {
 
         int row = DB.table("movie").where("id", selectedMovie.getId()).delete();
 
-        if(row>0) {
+        if (row > 0) {
             Alerter.showSuccess("Movie has been deleted successfully!");
             loadMovies();
             clearFields();
@@ -134,9 +127,14 @@ public class MovieScreenController extends Controller implements Initializable {
         validator.addRules(titleField, "required|alphanumeric", "Title is required|Title must be alaphanumeric");
         validator.addRules(lengthField, "required|time", "Length is required|Length must be in HH:MM format");
         validator.addRules(genreField, "required|alphanumeric", "Genre is required|Genre must be alaphanumeric");
+        validator.addRules(fromDate, "required|date", "From is required|From field must be a valid date");
+        validator.addRules(toDate, "required|date", "To is required|To field must be a valid date");
 
-        if(!validator.validate()) return;
-
+        if (!validator.validate()) return;
+        if (!(showTime1.isSelected() || showTime2.isSelected() || showTime3.isSelected() || showTime4.isSelected() || showTime5.isSelected())) {
+            Alerter.showError("At least one show time must be selected.");
+            return;
+        }
         Movie movie = container.make(Movie.class);
         movie.setName(titleField.getText());
         movie.setLength(lengthField.getText());
@@ -145,7 +143,7 @@ public class MovieScreenController extends Controller implements Initializable {
         movie.setToDate(toDate.getValue().toString());
         movie.setShowTimes(generateShowTimesString());
 
-        Map<String, String> movieValues = new HashMap<String, String>(){
+        Map<String, String> movieValues = new HashMap<String, String>() {
             {
                 put("name", movie.getName());
                 put("length", movie.getLength());
@@ -157,7 +155,7 @@ public class MovieScreenController extends Controller implements Initializable {
         };
         int row = DB.table("movie").set(movieValues).where("id", selectedMovie.getId()).update();
 
-        if(row>0) {
+        if (row > 0) {
             Alerter.showSuccess("Movie has been updated successfully!");
             loadMovies();
             clearFields();
@@ -171,7 +169,7 @@ public class MovieScreenController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadMovies();
 
-        showTimesCheckBoxes = new ArrayList<CheckBox>(){
+        showTimesCheckBoxes = new ArrayList<CheckBox>() {
             {
                 add(showTime1);
                 add(showTime2);
@@ -190,7 +188,7 @@ public class MovieScreenController extends Controller implements Initializable {
 
         showTimesCheckBoxes.forEach(box -> box.setVisible(false));
 
-        for(int i=0; i<showTimes.size(); i++) {
+        for (int i = 0; i < showTimes.size(); i++) {
             showTimesCheckBoxes.get(i).setVisible(true);
             showTimesCheckBoxes.get(i).setText(showTimes.get(i));
         }
@@ -245,9 +243,9 @@ public class MovieScreenController extends Controller implements Initializable {
         toDate.setValue(LocalDate.parse(selectedMovie.getToDate()));
         List<String> showTimes = selectedMovie.getShowTimesList();
 
-        for(int i=0; i<showTimes.size(); i++) {
-            for(int j=0; j<showTimesCheckBoxes.size(); j++) {
-                if(showTimes.get(i).equals(showTimesCheckBoxes.get(j).getText())) {
+        for (int i = 0; i < showTimes.size(); i++) {
+            for (int j = 0; j < showTimesCheckBoxes.size(); j++) {
+                if (showTimes.get(i).equals(showTimesCheckBoxes.get(j).getText())) {
                     showTimesCheckBoxes.get(j).setSelected(true);
                 }
             }
