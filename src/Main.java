@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import listeners.LogFetchedMovieSample;
 
 public class Main extends Application {
-    static Container container = ContainerFactory.getDefaultContainer();
+    private static Container container = ContainerFactory.getDefaultContainer();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -22,9 +22,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        DBConnector.connect(DatabaseType.MYSQL, "localhost", "8889", "mts", "root", "root");
+        DBConnector.connect(DatabaseType.MYSQL, "172.17.2.179", "8889", "mts", "root", "root");
         EventMapper.map(MovieWasFetchedSample.class, LogFetchedMovieSample.class);
-
         launch(args);
     }
 }
