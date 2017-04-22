@@ -9,7 +9,7 @@ import repositories.MovieRepository;
 
 import java.util.List;
 
-public class MovieService implements ContainerAware{
+public class MovieService implements ContainerAware, MovieServiceInterface {
     private MovieRepository movieRepository;
     private EventDispatcher dispatcher;
     private Container container;
@@ -19,12 +19,14 @@ public class MovieService implements ContainerAware{
         this.dispatcher = dispatcher;
     }
 
+    @Override
     public List<Movie> getAll() {
         List<Movie> movies = movieRepository.getAll();
         dispatcher.dispatch(new MovieWasFetched(movies));
         return movies;
     }
 
+    @Override
     public void save(Movie movie){
         movieRepository.save(movie);
     }
